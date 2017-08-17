@@ -113,14 +113,6 @@ Each list is defined as an object with the following properties:
 
 | property | Description | Usage |
 | -------- | ----------- | ----- |
-| name | This will be come the Java class name with the string "Const" appended to it | Mandatory |
-| javadoc | This javadocs will be added to the main class generated for this constants definitions | Mandatory |
-| members | An array of constants to be defined | Must include at least one constant member |
-
-The constants `members` array contains a list of member objects, each object having the following properties:
-
-| property | Description | Usage |
-| -------- | ----------- | ----- |
 | name | The List name will be the name of the Java class with "List" appended to it | Mandatory |
 | listOf | This is the type of objects contained in the list. For custom object use the full class name including the package | Mandatory |
 | item | This is the JSON name of the items in the list | Mandatory |
