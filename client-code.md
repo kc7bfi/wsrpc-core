@@ -25,8 +25,8 @@ public class VideoCommandClient extends VideoCommandActor {
 
 		// configure for SSL
 		SslContextConfigurator sslContextConfigurator = new SslContextConfigurator();
-		sslContextConfigurator.setTrustStoreFile("vicads.trust");
-		sslContextConfigurator.setTrustStorePassword("PSGGl0b@l");
+		sslContextConfigurator.setTrustStoreFile("trustfile");
+		sslContextConfigurator.setTrustStorePassword("MySecret");
 		sslEngineConfigurator = new SslEngineConfigurator(sslContextConfigurator, true, false, false);
 		sslEngineConfigurator.setHostVerificationEnabled(false); //skip host verification
 

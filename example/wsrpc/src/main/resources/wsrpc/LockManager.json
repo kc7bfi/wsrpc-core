@@ -12,7 +12,8 @@
 				{ "name": "lockId", "type": "long", "javadoc": "The global lock id" },
 				{ "name": "requester", "type": "String", "javadoc": "The user requesting the lock" }
 			],
-			"returns": "void"
+			"returns": "boolean",
+			"returnsJavadoc": "True if the lock was granted"
 		},
 		{
 			"name": "HaveLock",
