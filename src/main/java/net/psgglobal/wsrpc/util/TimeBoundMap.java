@@ -10,25 +10,31 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
+/*
 This file is part of wsrpc.
 
- wsrpc is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
+wsrpc is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
- wsrpc is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+wsrpc is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with wsrpc.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with wsrpc.  If not, see <http://www.gnu.org/licenses/>.
  */
-public class TimeBoundMap<K, T> implements Map<K, T> {
+
+/**
+ * A map of elements that expire after a specificed amout of time.
+ * @param <K> the key type
+ * @param <V> the value type
+ */
+public class TimeBoundMap<K, V> implements Map<K, V> {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-	private final LinkedHashMap<K, TimestampedValue<T>> hashmap = new LinkedHashMap<>();
+	private final LinkedHashMap<K, TimestampedValue<V>> hashmap = new LinkedHashMap<>();
 	private final long timeLimitMsecs;
 
 	/**
@@ -58,7 +64,7 @@ public class TimeBoundMap<K, T> implements Map<K, T> {
 	@Override
 	public boolean containsKey(Object key) {
 		synchronized (hashmap) {
-			TimestampedValue<T> entryValue = hashmap.get(key);
+			TimestampedValue<V> entryValue = hashmap.get(key);
 			if (entryValue == null) return false;
 			if (entryValue.dated > (System.currentTimeMillis() - timeLimitMsecs)) return true;
 			hashmap.remove(key);
@@ -70,7 +76,7 @@ public class TimeBoundMap<K, T> implements Map<K, T> {
 	public boolean containsValue(Object value) {
 		synchronized (hashmap) {
 			clean();
-			for (TimestampedValue<T> entryValue : hashmap.values()) {
+			for (TimestampedValue<V> entryValue : hashmap.values()) {
 				if (!entryValue.value.equals(value)) continue;
 				if (entryValue.dated > (System.currentTimeMillis() - timeLimitMsecs)) return true;
 				return false;
@@ -80,9 +86,9 @@ public class TimeBoundMap<K, T> implements Map<K, T> {
 	}
 
 	@Override
-	public T get(Object key) {
+	public V get(Object key) {
 		synchronized (hashmap) {
-			TimestampedValue<T> entryValue = hashmap.get(key);
+			TimestampedValue<V> entryValue = hashmap.get(key);
 			if (entryValue == null) return null;
 			if (entryValue.dated > (System.currentTimeMillis() - timeLimitMsecs)) return entryValue.value;
 			hashmap.remove(key);
@@ -91,30 +97,30 @@ public class TimeBoundMap<K, T> implements Map<K, T> {
 	}
 
 	@Override
-	public T put(K key, T value) {
+	public V put(K key, V value) {
 		if (value == null) throw new IllegalArgumentException();
 		synchronized (hashmap) {
-			TimestampedValue<T> entryValue = new TimestampedValue<>(value);
-			TimestampedValue<T> oldValue = hashmap.put(key, entryValue);
+			TimestampedValue<V> entryValue = new TimestampedValue<>(value);
+			TimestampedValue<V> oldValue = hashmap.put(key, entryValue);
 			if (oldValue == null) return null;
 			return oldValue.value;
 		}
 	}
 
 	@Override
-	public T remove(Object key) {
+	public V remove(Object key) {
 		synchronized (hashmap) {
-			TimestampedValue<T> oldValue = hashmap.remove(key);
+			TimestampedValue<V> oldValue = hashmap.remove(key);
 			if (oldValue == null) return null;
 			return oldValue.value;
 		}
 	}
 
 	@Override
-	public void putAll(Map<? extends K, ? extends T> m) {
+	public void putAll(Map<? extends K, ? extends V> m) {
 		synchronized (hashmap) {
-			for (Entry<? extends K, ? extends T> entry : m.entrySet()) {
-				TimestampedValue<T> entryValue = new TimestampedValue<>(entry.getValue());
+			for (Entry<? extends K, ? extends V> entry : m.entrySet()) {
+				TimestampedValue<V> entryValue = new TimestampedValue<>(entry.getValue());
 				hashmap.put(entry.getKey(), entryValue);
 			}
 		}
@@ -136,11 +142,11 @@ public class TimeBoundMap<K, T> implements Map<K, T> {
 	}
 
 	@Override
-	public Collection<T> values() {
+	public Collection<V> values() {
 		synchronized (hashmap) {
 			clean();
-			Map<K, T> entries = new HashMap<>();
-			for (Entry<K, TimestampedValue<T>> entry : hashmap.entrySet()) {
+			Map<K, V> entries = new HashMap<>();
+			for (Entry<K, TimestampedValue<V>> entry : hashmap.entrySet()) {
 				entries.put(entry.getKey(), entry.getValue().value);
 			}
 			return entries.values();
@@ -148,11 +154,11 @@ public class TimeBoundMap<K, T> implements Map<K, T> {
 	}
 
 	@Override
-	public Set<java.util.Map.Entry<K, T>> entrySet() {
+	public Set<java.util.Map.Entry<K, V>> entrySet() {
 		synchronized (hashmap) {
 			clean();
-			Map<K, T> entries = new HashMap<>();
-			for (Entry<K, TimestampedValue<T>> entry : hashmap.entrySet()) {
+			Map<K, V> entries = new HashMap<>();
+			for (Entry<K, TimestampedValue<V>> entry : hashmap.entrySet()) {
 				entries.put(entry.getKey(), entry.getValue().value);
 			}
 			return entries.entrySet();
@@ -182,9 +188,9 @@ public class TimeBoundMap<K, T> implements Map<K, T> {
 			long purgeBefore = System.currentTimeMillis() - timeLimitMsecs;
 			synchronized (hashmap) {
 				int initSize = hashmap.size();
-				Iterator<Entry<K, TimestampedValue<T>>> itr = hashmap.entrySet().iterator();
+				Iterator<Entry<K, TimestampedValue<V>>> itr = hashmap.entrySet().iterator();
 				while (itr.hasNext()) {
-					Entry<K, TimestampedValue<T>> entry = itr.next();
+					Entry<K, TimestampedValue<V>> entry = itr.next();
 					if (entry.getValue().dated > purgeBefore) continue;
 					itr.remove();
 				}
