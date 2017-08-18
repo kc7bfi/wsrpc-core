@@ -13,7 +13,20 @@ import rx.Observable;
 import rx.schedulers.Schedulers;
 
 /**
- * Copyright (c) 2002-2017, Prometheus Security Global, Inc.
+This file is part of wsrpc.
+
+ wsrpc is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ wsrpc is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with wsrpc.  If not, see <http://www.gnu.org/licenses/>.
  */
 public class WsRpcResponseQueue {
 	private final Logger logger = LoggerFactory.getLogger(getClass().getName());
@@ -29,9 +42,7 @@ public class WsRpcResponseQueue {
 
 	/**
 	 * Constructor
-	 *
-	 * @param ttl
-	 *            the time responses live unread in queue
+	 * @param ttl the time responses live unread in queue
 	 */
 	public WsRpcResponseQueue(int ttl) {
 		responses = new TimeBoundMap<>(ttl);
@@ -39,11 +50,8 @@ public class WsRpcResponseQueue {
 
 	/**
 	 * Add a response to the queue
-	 *
-	 * @param requestId
-	 *            the request id
-	 * @param response
-	 *            the response
+	 * @param requestId the request id
+	 * @param response the response
 	 */
 	public void addResponse(long requestId, JSONRPC2Response response) {
 		logger.debug("Received response to {}", requestId);
@@ -54,12 +62,9 @@ public class WsRpcResponseQueue {
 	}
 
 	/**
-	 * Get the response on a spearpate thread
-	 *
-	 * @param requestId
-	 *            the request id to wait for
-	 * @param timeout
-	 *            the time to wait for a response (ms)
+	 * Get the response on a separate thread
+	 * @param requestId the request id to wait for
+	 * @param timeout the time to wait for a response (ms)
 	 * @return the observable
 	 */
 	public Observable<JSONRPC2Response> onResponse(Object requestId, int timeout) {
@@ -68,12 +73,9 @@ public class WsRpcResponseQueue {
 	}
 
 	/**
-	 * Get the resonse on this thread
-	 *
-	 * @param requestId
-	 *            the request id
-	 * @param timeout
-	 *            the timeout value
+	 * Get the response on this thread
+	 * @param requestId the request id
+	 * @param timeout the timeout value
 	 * @return the response
 	 */
 	public JSONRPC2Response getResponse(Object requestId, int timeout) {
@@ -88,11 +90,8 @@ public class WsRpcResponseQueue {
 
 	/**
 	 * Read a response
-	 *
-	 * @param requestId
-	 *            the response id
-	 * @param timeout
-	 *            the timeout in milliseconds
+	 * @param requestId the response id
+	 * @param timeout the timeout in milliseconds
 	 * @return the response
 	 */
 	private class ReadResponseCallable implements Callable<JSONRPC2Response> {
@@ -102,11 +101,8 @@ public class WsRpcResponseQueue {
 
 		/**
 		 * Constructor.
-		 *
-		 * @param id
-		 *            the response id
-		 * @param timeout
-		 *            the read timeout
+		 * @param id the response id
+		 * @param timeout the read timeout
 		 */
 		public ReadResponseCallable(Object id, int timeout) {
 			this.requestId = id;
@@ -120,8 +116,7 @@ public class WsRpcResponseQueue {
 				while (readExpires > System.currentTimeMillis()) {
 					synchronized (responses) {
 						JSONRPC2Response response = responses.remove(requestId);
-						if (response != null)
-							return response;
+						if (response != null) return response;
 
 						// wait for response to come in
 						long waittime = Math.max(readExpires - System.currentTimeMillis(), 100);
@@ -129,14 +124,11 @@ public class WsRpcResponseQueue {
 					}
 				}
 				JSONRPC2Response response = responses.remove(requestId);
-				if (response != null)
-					return response;
+				if (response != null) return response;
 			} catch (InterruptedException e) {
 				logger.debug("Wokeup waiting for response");
 			}
 			throw new IOException("Timeout");
 		}
-
 	}
-
 }
