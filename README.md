@@ -19,9 +19,9 @@ In addition to the features above, it also includes:
 
 # Getting Started
 
-1. Write an interface [specification file](specification-file.md). 
-2. Setup you maven project and [generate the code](generate-code.md).
-3. Write the [server side code](server-code.md).
-4. Write the [client side code](client-code.md).
-5. Make wsrpc calls from [your code](calling-wsrpc.md).
+1. Write an interface [specification file](docs/specification-file.md). 
+2. Setup you maven project and [generate the code](docs/generate-code.md).
+3. Write the [server side code](docs/server-code.md).
+4. Write the [client side code](docs/client-code.md).
+5. Make wsrpc calls from [your code](docs/calling-wsrpc.md).
 
