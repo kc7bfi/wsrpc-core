@@ -1,0 +1,73 @@
+{
+	"name": "LockManager",
+	"package": "demo.wsrpc",
+	"javadoc": "This interface provides a global lock manager",
+	"requests": [
+		{
+			"name": "AskForLock",
+			"sender": "server",
+			"defaultTimeout": 30000,
+			"javadoc": "Request a lock, waiting till it comes available",
+			"parameters": [
+				{ "name": "lockId", "type": "long", "javadoc": "The global lock id" },
+				{ "name": "requester", "type": "String", "javadoc": "The user requesting the lock" }
+			],
+			"returns": "void"
+		},
+		{
+			"name": "HaveLock",
+			"sender": "client",
+			"javadoc": "Test if we are currently holding the lock",
+			"returns": "boolean",
+			"returnsJavadoc": "true it we are currently holding the lock"
+		},
+		{
+			"name": "FreeLock",
+			"sender": "client",
+			"javadoc": "Free our lock",
+			"returns": "void"
+		},
+		{
+			"name": "RequestLock",
+			"sender": "client",
+			"abstractOnCall": true,
+			"javadoc": "Request a lock",
+			"parameters": [
+				{ "name": "lockId", "type": "long", "javadoc": "The global lock id" },
+				{ "name": "waitForLock", "type": "boolean", "javadoc": "If true, wait for the lock, otherwise return immediatly" }
+			],
+			"returns": "boolean",
+			"returnsJavadoc": "true it the lock was granted"
+		},
+		{
+			"name": "IsLocked",
+			"sender": "client",
+			"javadoc": "Test if the lock is locked",
+			"parameters": [
+				{ "name": "lockId", "type": "long", "javadoc": "The global lock id" }
+			],
+			"returns": "boolean",
+			"returnsJavadoc": "true it the lock is currently locked"
+		}		
+	],
+	"notices": [
+		{
+			"name": "LockStolen",
+			"sender": "server",
+			"javadoc": "Our lock has been stolen",
+			"parameters": [
+				{ "name": "lockId", "type": "long", "javadoc": "The global lock id" },
+				{ "name": "holder", "type": "String", "javadoc": "The user currently holding the lock" }
+			]
+		},
+		{
+			"name": "WaitingForLock",
+			"sender": "server",
+			"javadoc": "We are waiting for a holder to grant us the lock",
+			"parameters": [
+				{ "name": "lockId", "type": "long", "javadoc": "The global lock id" },
+				{ "name": "holder", "type": "String", "javadoc": "The user currently holding the lock" }
+			]
+		}
+	]
+}
