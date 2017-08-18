@@ -18,7 +18,12 @@ The header section contains the following properties:
 | name | This is the name of the interface | Mandatory |
 | package | This is the Java package name for the generated Java classes | Mandatory |
 | supportBinaryData | If true, then binary websocket IO will be used | Defaults to false |
-| constants | the constants definition | Optional |
+| jwtSecurity | If true, then the client must authenticate itself with a JWT token prior to other requests | Defaults to false |
+| constants | The constants definition | Optional |
+| classes | An array of class definitions | Optional |
+| lists | An array of list definitions | Optional |
+| requests | An array of request definitions | Optional |
+| notices | An array of notice definitions | Optional |
 
 Example:
 
@@ -36,6 +41,9 @@ Example:
 		...
 	],
 	"requests": [
+		...
+	],
+	"notices": [
 		...
 	]
 }
@@ -144,7 +152,7 @@ Each entry in the requests array contains the following properties:
 | parameters | An array of request parameters | Must include at least one request parameter |
 | returns | This is the type of object returned by the request. For custom types use the fill class name including package | Manditory |
 | returnsJavadoc | The javadoc for the returned object | Optional |
-| defaultTimeout | The default timeout for this request | Optional |
+| defaultTimeout | The default timeout for this request | Defaults to 200ms |
 | sender | This is who is sending the request. Values are `client`, `server`, or `both` | Defaults to `client` |
 | abstractOnCall | If false, use simple RPC otherwise use advanced RPC | Defaults to false |
 
