@@ -22,6 +22,6 @@ In addition to the features above, it also includes:
 1. Write an interface [specification file](specification-file.md). 
 2. Setup you maven project and [generate the code](generate-code.md).
 3. Write the [server side code](server-code.md).
-4. Write the [client side code](client-code.ms).
+4. Write the [client side code](client-code.md).
 5. Make wsrpc calls from [your code](calling-wsrpc.md).
 
