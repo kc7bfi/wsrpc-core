@@ -14,14 +14,14 @@ In addition to the features above, it also includes:
 
 1. The ability to send text and/or binary data over the WebSocket.
 2. Uses JSON Web Token (JTW) technology for authentication.
-3. Can be used in simple RPC mode or in extended mode where the server can repsond early to the client while it continues to proess the request.
+3. Can be used in simple RPC mode or in extended mode where the server can respond early to the client while it continues to proess the request.
 4. Uses RxJava for asynchronous communications.
 
 # Getting Started
 
 1. Write an interface [specification file](specification-file.md). 
-These files are simple JSON files that describe the interface and from which the various Java source code files are generated
-2. Setup you maven project and generate the code
-3. Write the server side code
-4. Write the client side code.
+2. Setup you maven project and [generate the code](generate-code.md).
+3. Write the [server side code](server-code.md).
+4. Write the [client side code](client-code.ms).
+5. Make wsrpc calls from [your code](calling-wsrpc.md).
 
