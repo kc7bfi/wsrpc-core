@@ -16,6 +16,7 @@ In addition to the features above, it also includes:
 2. Uses JSON Web Token (JTW) technology for authentication.
 3. Can be used in simple RPC mode or in extended mode where the server can respond early to the client while it continues to proess the request.
 4. Uses RxJava for asynchronous communications.
+5. Can be impleneted in a brwoser using JavaScript.
 
 # Getting Started
 
@@ -24,4 +25,10 @@ In addition to the features above, it also includes:
 3. Write the [server side code](docs/server-code.md).
 4. Write the [client side code](docs/client-code.md).
 5. Make wsrpc calls from [your code](docs/calling-wsrpc.md).
+
+# How it works
+
+# Community Support
+For support and discussions, please join the [wsrpc group](https://groups.google.com/d/forum/wsrpc).
+
 
