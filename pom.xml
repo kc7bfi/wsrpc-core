@@ -8,6 +8,31 @@
 	<packaging>jar</packaging>
 
 	<name>WebSocket RPC Core Library</name>
+	<description>This is the core libraries for the WebSocket (wsrpc) project.</description>
+	<url>https://github.com/kc7bfi/wsrpc-core</url>
+
+	<licenses>
+		<license>
+			<name>The GNU Lesser General Public License, Version 3.0</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>David R. Robison</name>
+			<email>david.robison@psgglobal.net</email>
+			<organization>Prometheus Security Group Global</organization>
+			<organizationUrl>http://www.psggloba.net</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git://github.com/kc7bfi/wsrpc-core</connection>
+		<developerConnection>scm:git:ssh://github.com:kc7bfi/wsrpc-core.git</developerConnection>
+		<url>http://github.com/kc7bfi/wsrpc-core</url>
+	</scm>
 
 	<prerequisites>
 		<maven>3.0</maven>
@@ -73,6 +98,46 @@
 						<target>1.8</target>
 						<compilerArgument>-proc:none</compilerArgument>
 					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.2.1</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<goals>
+								<goal>jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.9.1</version>
+					<executions>
+						<execution>
+							<id>attach-javadocs</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.5</version>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.sonatype.plugins</groupId>
