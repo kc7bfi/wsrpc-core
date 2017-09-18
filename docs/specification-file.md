@@ -19,6 +19,10 @@ The header section contains the following properties:
 | package | This is the Java package name for the generated Java classes | Mandatory |
 | supportBinaryData | If true, then binary websocket IO will be used | Defaults to false |
 | jwtSecurity | If true, then the client must authenticate itself with a JWT token prior to other requests | Defaults to false |
+| synchronized | If "none" then all requests will be processed on a cached thread pool.
+If "client" then all requests to the client will be processed on a single thread. If "server" than all requests to the serve will be single threaded. If "both" then all requests to the client and server will be singly threaded | Defaults to "none" |
+| maxBinaryMessageSize | The maximum binary message in bytes | Optional |
+| maxTextMessageSize | The maximum text message in bytes | Optional |
 | constants | The constants definition | Optional |
 | classes | An array of class definitions | Optional |
 | lists | An array of list definitions | Optional |
