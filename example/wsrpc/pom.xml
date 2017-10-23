@@ -70,7 +70,23 @@
 				</configuration>
 				<executions>
 					<execution>
+						<id>java</id>
 						<phase>generate-sources</phase>
+						<configuration>
+							<targetLang>java</targetLang>
+							<outputDir>${project.build.directory}/generated-sources/wsrpc/java</outputDir>
+						</configuration>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>ts</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<targetLang>ts</targetLang>
+							<outputDir>${project.build.directory}/generated-sources/wsrpc/ts</outputDir>
+						</configuration>
 						<goals>
 							<goal>generate</goal>
 						</goals>
