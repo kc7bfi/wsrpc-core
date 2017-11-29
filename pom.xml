@@ -52,6 +52,7 @@
 	<properties>
 		<commons.lang3.version>3.6</commons.lang3.version>
 		<java.websocket.version>1.3.4</java.websocket.version>
+		<javajwt.version>3.1.0</javajwt.version>
 		<jsonrpc2.version>1.38</jsonrpc2.version>
 		<junit.version>4.12</junit.version>
 		<rxjava.version>1.2.3</rxjava.version>
@@ -78,6 +79,11 @@
 			<groupId>com.thetransactioncompany</groupId>
 			<artifactId>jsonrpc2-base</artifactId>
 			<version>${jsonrpc2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>${javajwt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
