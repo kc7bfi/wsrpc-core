@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Response;
 
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 import net.psgglobal.wsrpc.util.TimeBoundMap;
-import rx.Observable;
-import rx.schedulers.Schedulers;
 
 /*
 This file is part of wsrpc.
@@ -71,9 +71,9 @@ public class WsRpcResponseQueue {
 	 * @param timeout the time to wait for a response (ms)
 	 * @return the observable
 	 */
-	public Observable<JSONRPC2Response> onResponse(Object requestId, int timeout) {
+	public Single<JSONRPC2Response> onResponse(Object requestId, int timeout) {
 		logger.debug("Looking for response to {}", requestId);
-		return Observable.fromCallable(new ReadResponseCallable(requestId, timeout)).subscribeOn(Schedulers.io());
+		return Single.fromCallable(new ReadResponseCallable(requestId, timeout)).subscribeOn(Schedulers.io());
 	}
 
 	/**

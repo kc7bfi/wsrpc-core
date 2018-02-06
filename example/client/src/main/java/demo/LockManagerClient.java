@@ -56,7 +56,7 @@ public class LockManagerClient  extends LockManagerActor {
 	public static void main(String[] args) {
 		LockManagerClient client = new LockManagerClient("wss://1.1.1.1:8443/MyService/LockManager");
 		try {
-			boolean ok = client.syncRequestLock(1, false);
+			boolean ok = client.requestLock(1, false);
 			System.out.println("Lock was granted? " + ok);
 		} catch (IOException e) {
 			e.printStackTrace();

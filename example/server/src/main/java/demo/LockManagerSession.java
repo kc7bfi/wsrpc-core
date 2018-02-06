@@ -53,7 +53,7 @@ public class LockManagerSession extends LockManagerAgent {
 
 		// ask the other session for the locks
 		try {
-			boolean granted = holder.syncAskForLock(request.getLockId(), this.getWsSessionId(), 30000);
+			boolean granted = holder.askForLock(request.getLockId(), this.getWsSessionId(), 30000);
 			this.sendSilentResponse(granted, request.getRequestId());
 		} catch (IOException e) {
 			this.sendSilentInternalError("Error asking for lock " + e, request.getRequestId());
