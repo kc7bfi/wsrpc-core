@@ -35,13 +35,16 @@ along with wsrpc.  If not, see <http://www.gnu.org/licenses/>.
 public class WsRpcResponseQueue {
 	private final Logger logger = LoggerFactory.getLogger(getClass().getName());
 
+	private static final int DEFAULT_TTL_MS = 60 * 1000;
+
 	private final TimeBoundMap<Long, JSONRPC2Response> responses;
+	private final Object responseSignal = new Object();
 
 	/**
 	 * Constructor.
 	 */
 	public WsRpcResponseQueue() {
-		responses = new TimeBoundMap<>(60 * 1000L);
+		this(DEFAULT_TTL_MS);
 	}
 
 	/**
@@ -58,10 +61,10 @@ public class WsRpcResponseQueue {
 	 * @param response the response
 	 */
 	public void addResponse(long requestId, JSONRPC2Response response) {
-		logger.debug("Received response to {}", requestId);
-		synchronized (responses) {
+		if (logger.isDebugEnabled()) logger.debug("Received response to {}", requestId);
+		synchronized (responseSignal) {
 			responses.put(requestId, response);
-			responses.notifyAll();
+			responseSignal.notifyAll();
 		}
 	}
 
@@ -72,7 +75,7 @@ public class WsRpcResponseQueue {
 	 * @return the observable
 	 */
 	public Single<JSONRPC2Response> onResponse(Object requestId, int timeout) {
-		logger.debug("Looking for response to {}", requestId);
+		if (logger.isDebugEnabled()) logger.debug("Looking for response to {}", requestId);
 		return Single.fromCallable(new ReadResponseCallable(requestId, timeout)).subscribeOn(Schedulers.io());
 	}
 
@@ -115,24 +118,26 @@ public class WsRpcResponseQueue {
 
 		@Override
 		public JSONRPC2Response call() throws Exception {
+			long now = System.currentTimeMillis();
 			long readExpires = System.currentTimeMillis() + timeout;
 			try {
 				while (readExpires > System.currentTimeMillis()) {
-					synchronized (responses) {
+					synchronized (responseSignal) {
 						JSONRPC2Response response = responses.remove(requestId);
 						if (response != null) return response;
 
 						// wait for response to come in
 						long waittime = Math.max(readExpires - System.currentTimeMillis(), 100);
-						responses.wait(waittime);
+						responseSignal.wait(waittime);
 					}
 				}
 				JSONRPC2Response response = responses.remove(requestId);
 				if (response != null) return response;
 			} catch (InterruptedException e) {
-				logger.debug("Wokeup waiting for response");
+				if (logger.isDebugEnabled()) logger.debug("Wokeup waiting for response");
 			}
-			throw new IOException("Timeout");
+			if (logger.isDebugEnabled()) logger.debug("Timedout looking for request {} in {}ms", requestId, System.currentTimeMillis() - now);
+			throw new IOException("Timeout on request " + requestId);
 		}
 	}
 }
