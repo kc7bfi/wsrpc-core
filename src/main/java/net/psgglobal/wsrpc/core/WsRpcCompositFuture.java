@@ -3,7 +3,10 @@ package net.psgglobal.wsrpc.core;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /*
 This file is part of wsrpc.
@@ -55,6 +58,25 @@ public class WsRpcCompositFuture {
 				future.cancel(mayInterruptIfRunning);
 			}
 			futures.clear();
+		}
+	}
+
+	/**
+	 * Wait for all futures to complete
+	 * @param timeout the timeout
+	 * @param timeUnit the timeout units
+	 * @throws InterruptedException error
+	 * @throws ExecutionException error
+	 * @throws TimeoutException error
+	 */
+	public void waitForAll(int timeout, TimeUnit timeUnit) throws InterruptedException, ExecutionException, TimeoutException {
+		synchronized (futures) {
+			Iterator<Future<?>> iter = futures.iterator();
+			while (iter.hasNext()) {
+				Future<?> future = iter.next();
+				if (future.isCancelled() || future.isDone()) continue;
+				future.get(timeout, timeUnit);
+			}
 		}
 	}
 
