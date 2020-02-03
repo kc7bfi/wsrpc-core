@@ -1,0 +1,31 @@
+{
+	"name": "EnumTest",
+	"package": "demo.wsrpc",
+	"javadoc": "This interface test the enum generation",
+	"notices": [
+		{
+			"name": "EnumEvent",
+			"sender": "client",
+			"parameters": [
+				{ "name": "theEvent", "type": "demo.wsrpc.EnumOne" }
+			]
+		}
+	],
+	"enums": [
+		{
+			"name": "EnumOne",
+			"javadoc": "Test Enum",
+			"members": [
+				{ "value": "ONE", "name": "one", "javadoc": "The first enum" },
+				{ "value": "TWO", "name": "two", "javadoc": "The second enum" }
+			]
+		},
+		{
+			"name": "EnumTwo",
+			"members": [
+				{ "value": "TWOONE", "javadoc": "The first enum" },
+				{ "value": "TWOTWO", "javadoc": "The second enum" }
+			]
+		}
+	]
+}
