@@ -50,13 +50,13 @@
 	</distributionManagement>
 
 	<properties>
-		<commons.lang3.version>3.6</commons.lang3.version>
-		<java.websocket.version>1.5.0</java.websocket.version>
-		<javajwt.version>3.1.0</javajwt.version>
-		<jsonrpc2.version>1.38</jsonrpc2.version>
+		<commons.lang3.version>3.7</commons.lang3.version>
+		<java.websocket.version>1.5.1</java.websocket.version>
+		<javajwt.version>3.4.1</javajwt.version>
+		<jsonrpc2.version>1.38.1</jsonrpc2.version>
 		<junit.version>4.12</junit.version>
 		<rxjava2.version>2.1.8</rxjava2.version>
-		<slf4j.version>1.7.7</slf4j.version>
+		<slf4j.version>1.7.22</slf4j.version>
 	</properties>
 
 	<dependencies>
