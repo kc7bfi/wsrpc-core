@@ -34,21 +34,6 @@
 		<url>http://github.com/kc7bfi/wsrpc-core</url>
 	</scm>
 
-	<prerequisites>
-		<maven>3.0</maven>
-	</prerequisites>
-
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
-
 	<properties>
 		<commons.lang3.version>3.7</commons.lang3.version>
 		<java.websocket.version>1.5.1</java.websocket.version>
@@ -98,8 +83,18 @@
 		</dependency>
 	</dependencies>
 
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
 	<build>
-		<pluginManagement>
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -144,7 +139,7 @@
 					<executions>
 						<execution>
 							<id>sign-artifacts</id>
-							<phase>verify</phase>
+							<phase>deploy</phase>
 							<goals>
 								<goal>sign</goal>
 							</goals>
@@ -163,6 +158,5 @@
 					</configuration>
 				</plugin>
 			</plugins>
-		</pluginManagement>
 	</build>
 </project>
