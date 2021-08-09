@@ -5,7 +5,7 @@
 	<groupId>net.psgglobal.wsrpc.demo</groupId>
 	<artifactId>demo-wsrpc</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.3-SNAPSHOT</version>
 
 	<name>Demo WSRPC generated code</name>
 
@@ -14,21 +14,21 @@
 	</prerequisites>
 
 	<properties>
-		<commons.lang.version>2.6</commons.lang.version>
-		<jetty.version>9.3.0.M2</jetty.version>
-		<tyrus.version>1.13</tyrus.version>
+		<commons.lang3.version>3.7</commons.lang3.version>
+		<jetty.version>9.4.18.v20190429</jetty.version>
+		<tyrus.version>1.15</tyrus.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>net.psgglobal.wsrpc</groupId>
 			<artifactId>wsrpc-core</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>${commons.lang.version}</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons.lang3.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty.websocket</groupId>
@@ -58,7 +58,7 @@
 			<plugin>
 				<groupId>net.psgglobal.wsrpc</groupId>
 				<artifactId>wsrpc-maven-plugin</artifactId>
-				<version>1.0-SNAPSHOT</version>
+				<version>1.3-SNAPSHOT</version>
 				<configuration>
 					<inputDir>${project.basedir}/src/main/resources/wsrpc</inputDir>
 				</configuration>

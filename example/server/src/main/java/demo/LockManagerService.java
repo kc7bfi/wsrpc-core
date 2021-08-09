@@ -3,7 +3,7 @@ package demo;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 
 import demo.wsrpc.LockManagerReactor;
@@ -17,7 +17,7 @@ public class LockManagerService extends LockManagerReactor<LockManagerSession> {
 	}
 
 	@Override
-	public JWT valiateJWTToken(String jwtToken) throws JWTVerificationException {
+	public DecodedJWT valiateJWTToken(String jwtToken) throws JWTVerificationException {
 		return null; // JWT autehntication not used
 	}
 
