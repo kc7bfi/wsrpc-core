@@ -42,7 +42,7 @@
 		<jsonrpc2.version>2.0</jsonrpc2.version>
 		<junit.version>4.13.1</junit.version>
 		<maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
-		<maven.gpg.plugin.version>3.0.1</maven.gpg.plugin.version> <!-- 1.5 -->
+		<maven.gpg.plugin.version>3.0.1</maven.gpg.plugin.version>
 		<maven.javadoc.plugin.version>3.3.0</maven.javadoc.plugin.version>
 		<maven.nexus.staging.version>1.6.7</maven.nexus.staging.version>
 		<maven.source.plugin.version>3.2.0</maven.source.plugin.version>
