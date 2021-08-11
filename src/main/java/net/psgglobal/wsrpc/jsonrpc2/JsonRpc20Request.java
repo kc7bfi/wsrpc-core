@@ -1,8 +1,7 @@
 package net.psgglobal.wsrpc.jsonrpc2;
 
-import java.util.Map;
-
 import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 
 /*
 This file is part of wsrpc.
@@ -64,7 +63,7 @@ public class JsonRpc20Request {
 	 */
 	@SuppressWarnings("unchecked")
 	public Object getMapParam(String paramName) {
-		return ((Map<String, Object>)params).get(paramName);
+		return ((LinkedTreeMap<String, Object>)params).get(paramName);
 	}
 
 	/**
