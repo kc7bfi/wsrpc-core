@@ -41,6 +41,7 @@ public class JsonRpc20Response {
 	 */
 	public JsonRpc20Response(long id) {
 		this.id = id;
+		result = true;
 	}
 
 	/**
