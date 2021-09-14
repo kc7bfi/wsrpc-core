@@ -129,6 +129,28 @@ public class JsonRpc20Response {
 	}
 
 	/**
+	 * @return the result
+	 */
+	public long getLongResult() {
+		if (result instanceof Double) return ((Double)result).longValue();
+		if (result instanceof Integer) return ((Integer)result).longValue();
+		if (result instanceof Long) return ((Long)result).longValue();
+		if (result instanceof String) return Long.parseLong((String)result);
+		return (long)result;
+	}
+
+	/**
+	 * @return the result
+	 */
+	public int getIntegerResult() {
+		if (result instanceof Double) return ((Double)result).intValue();
+		if (result instanceof Integer) return ((Integer)result).intValue();
+		if (result instanceof Long) return ((Long)result).intValue();
+		if (result instanceof String) return Integer.parseInt((String)result);
+		return (int)result;
+	}
+
+	/**
 	 * @param result the result to set
 	 */
 	public void setResult(Object result) {
