@@ -41,9 +41,10 @@
 		<java.websocket.version>1.5.2</java.websocket.version>
 		<javajwt.version>3.19.0</javajwt.version>
 		<junit.version>4.13.1</junit.version>
-		<maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+		<maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
+		<maven.dependency.check.version>8.4.0</maven.dependency.check.version><!--dependency-check-maven-->
 		<maven.gpg.plugin.version>3.0.1</maven.gpg.plugin.version>
-		<maven.javadoc.plugin.version>3.3.0</maven.javadoc.plugin.version>
+		<maven.javadoc.plugin.version>3.3.2</maven.javadoc.plugin.version>
 		<maven.nexus.staging.version>1.6.7</maven.nexus.staging.version>
 		<maven.source.plugin.version>3.2.0</maven.source.plugin.version>
 		<rxjava2.version>2.1.8</rxjava2.version>
@@ -142,6 +143,27 @@
 							</goals>
 						</execution>
 					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.owasp</groupId>
+					<artifactId>dependency-check-maven</artifactId>
+					<version>${maven.dependency.check.version}</version>
+					<configuration>
+						<ossindexServerId>ossindex</ossindexServerId>
+						<skipProvidedScope>true</skipProvidedScope>
+						<skipTestScope>true</skipTestScope>
+						<skipSystemScope>true</skipSystemScope>
+						<failBuildOnCVSS>0</failBuildOnCVSS>
+						<retireJsAnalyzerEnabled>false</retireJsAnalyzerEnabled>
+						<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+						<nodeAuditSkipDevDependencies>true</nodeAuditSkipDevDependencies>
+						<nodePackageSkipDevDependencies>true</nodePackageSkipDevDependencies>
+						<nodeAnalyzerEnabled>true</nodeAnalyzerEnabled>
+						<nodeAuditAnalyzerEnabled>true</nodeAuditAnalyzerEnabled>
+						<suppressionFiles>
+							<suppressionFile>OWASPSuppressionFile.xml</suppressionFile>
+						</suppressionFiles>
+					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
